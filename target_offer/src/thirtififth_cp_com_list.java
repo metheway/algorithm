@@ -32,7 +32,7 @@ public class thirtififth_cp_com_list {
 
     public static RandomListNode Clone(RandomListNode pHead) {
         if (pHead == null) {
-            return new RandomListNode( 1);
+            return null;
         }
         RandomListNode cpHead = new RandomListNode(pHead.label);
         RandomListNode current = cpHead;
@@ -72,8 +72,8 @@ public class thirtififth_cp_com_list {
             }
 
             if (headList.next != null) {
-                headList.next = current.next;
-                headList = current.next;
+                headList.next = headList.next.next;
+                headList = headList.next;
             } else {
                 // the last node
                 headList.next = null;
