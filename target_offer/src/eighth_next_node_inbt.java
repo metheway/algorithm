@@ -1,6 +1,6 @@
 public class eighth_next_node_inbt {
     // not solved
-    public class TreeLinkNode {
+    public static class TreeLinkNode {
         int val;
         TreeLinkNode left = null;
         TreeLinkNode right = null;
@@ -9,10 +9,57 @@ public class eighth_next_node_inbt {
         TreeLinkNode(int val) {
             this.val = val;
         }
+
+        @Override
+        public String toString() {
+            return "TreeLinkNode{" +
+                    "val=" + val ;
+        }
     }
     public static void main(String[] args) {
+        int[] inorder = new int[]{8,6,10,5,7,9,11};
+        TreeLinkNode[] trees = new TreeLinkNode[inorder.length];
+        for (int i = 0; i < inorder.length; i++) {
+            trees[i] = new TreeLinkNode(inorder[i]);
+        }
         // given a binary tree of inorder
+        TreeLinkNode root = null;
+        for (int i = inorder.length / 2; i >= 0; i--) {
+            root = trees[i];
+            int left = i * 2 + 1;
+            int right = left + 1;
+            if (left < inorder.length) {
+                root.left = trees[left];
+                trees[left].next = root;
+            }
+            if (right < inorder.length) {
+                root.right = trees[right];
+                trees[right].next = root;
+            }
+        }
+
+        System.out.println(trees[3]);
+        System.out.println(getNext(trees[3]));
         // inorder is l - n - r
+    }
+    public static TreeLinkNode getNext(TreeLinkNode pNode) {
+        if (pNode == null) {
+            return null;
+        }
+        if (pNode.right != null) {
+            return firstInorder(pNode.right);
+        } else {
+            // find parrent
+            TreeLinkNode parrent = pNode.next;
+            while (parrent != null && parrent.left != pNode) {
+                pNode = parrent;
+                parrent = pNode.next;
+            }
+            if (parrent != null) {
+                return parrent;
+            }
+        }
+        return null;
     }
     public TreeLinkNode GetNext(TreeLinkNode pNode) {
         // if current node has a right branch, next node would be the first node in right branch
@@ -48,7 +95,7 @@ public class eighth_next_node_inbt {
         }
     }
 
-    private TreeLinkNode firstInorder(TreeLinkNode right) {
+    private static TreeLinkNode firstInorder(TreeLinkNode right) {
         if (right.left != null) {
             return firstInorder(right.left);
         } else {

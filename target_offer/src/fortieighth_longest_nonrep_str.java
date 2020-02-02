@@ -6,6 +6,34 @@ public class fortieighth_longest_nonrep_str {
 //        System.out.println(isRepeatedAndFindIndex("arabcacfr", 5, 3));
     }
 
+    public boolean duplicate(int numbers[],int length,int [] duplication) {
+        if (numbers == null || numbers.length == 0 || length <= 0) {
+            return false;
+        }
+        // partiion？二分查找？，找到第一个重复的数字, 0 ~ n - 1内
+        // 放回去呗
+        for (int i = 0; i < numbers.length; i++) {
+            int index = numbers[i];
+            if (i != index) {
+                if (numbers[index] == index) {
+                    // 若重复存在，
+                    duplication[0] = index;
+                    return true;
+                } else {
+                    // 不重复则换
+                    swap(numbers, i, index);
+                }
+            }
+        }
+        return false;
+    }
+
+    private void swap(int[] numbers, int i, int index) {
+        int tmp = numbers[i];
+        numbers[i] = numbers[index];
+        numbers[index] = tmp;
+    }
+
     public static int withoutDuplication(String str) {
         int maxCount = 0;
         for (int i = 0; i < str.length(); i++) {
